@@ -42,25 +42,21 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="n7r-4A-P10">
                                 <rect key="frame" x="0.0" y="116" width="375" height="551"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HOC-a9-uBI">
-                                    <size key="itemSize" width="267" height="237"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
+                                <inset key="scrollIndicatorInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                                <collectionViewLayout key="collectionViewLayout" id="EKf-N0-Cqf" customClass="PinterestLayout" customModule="PinterestLikeApp" customModuleProvider="target"/>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="baj-ce-mfX">
-                                        <rect key="frame" x="54" y="0.0" width="267" height="237"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PhotoCell" id="baj-ce-mfX" customClass="PhotoCell" customModule="PinterestLikeApp" customModuleProvider="target">
+                                        <rect key="frame" x="31" y="0.0" width="313" height="233"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="267" height="237"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="313" height="233"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="YBK-y9-lWQ">
                                                     <rect key="frame" x="13" y="45" width="280" height="168"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="sOj-Qe-IXk">
-                                                            <rect key="frame" x="0.0" y="0.0" width="267" height="237"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="313" height="233"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                     <integer key="value" value="10"/>
@@ -72,20 +68,29 @@
                                             </subviews>
                                         </view>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="YBK-y9-lWQ" secondAttribute="bottom" id="1St-D5-EHy"/>
+                                            <constraint firstItem="YBK-y9-lWQ" firstAttribute="leading" secondItem="baj-ce-mfX" secondAttribute="leading" id="8mf-tq-Aub"/>
                                             <constraint firstItem="YBK-y9-lWQ" firstAttribute="top" secondItem="baj-ce-mfX" secondAttribute="top" id="AIT-fh-sNm"/>
                                             <constraint firstAttribute="trailing" secondItem="YBK-y9-lWQ" secondAttribute="trailing" id="Y7t-s9-Vya"/>
                                             <constraint firstAttribute="bottom" secondItem="YBK-y9-lWQ" secondAttribute="bottom" id="e8V-02-Wy3"/>
                                             <constraint firstItem="YBK-y9-lWQ" firstAttribute="leading" secondItem="baj-ce-mfX" secondAttribute="leading" id="fxu-bf-eMZ"/>
+                                            <constraint firstItem="YBK-y9-lWQ" firstAttribute="top" secondItem="baj-ce-mfX" secondAttribute="top" id="qWv-Ou-UZn"/>
+                                            <constraint firstAttribute="trailing" secondItem="YBK-y9-lWQ" secondAttribute="trailing" id="vFq-wo-sQI"/>
                                         </constraints>
+                                        <size key="customSize" width="313" height="233"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                 <integer key="value" value="10"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="imageView" destination="sOj-Qe-IXk" id="qs7-ql-G9E"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="phA-VP-DOm"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="exI-gq-dH5"/>
                                 </connections>
                             </collectionView>
                         </subviews>
