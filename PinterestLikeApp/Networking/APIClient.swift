@@ -13,12 +13,21 @@ enum Either<T> {
     case error(Error)
 }
 
+enum APIError: Error {
+    case unknown, badResponse, jsonDecoder
+}
+
 protocol APIClient {
     var session: URLSession { get }
     func get<T: Codable>(with request: URLRequest, completion: @escaping (Either<[T]>) -> Void)
 }
 
 extension APIClient {
+    
+    // Session property
+    var session: URLSession {
+        return URLSession.shared
+    }
     
     func get<T: Codable>(with request: URLRequest, completion: @escaping (Either<[T]>) -> Void) {
         
@@ -33,13 +42,13 @@ extension APIClient {
             
             // Check for a response
             guard let response = response as? HTTPURLResponse, 200..<300 ~= response.statusCode else {
-                print("Error: with response!")
+                completion(.error(APIError.badResponse))
                 return
             }
         
             // Decode the array of images
             guard let value = try? JSONDecoder().decode([T].self, from: data!) else {
-                print("Decoder error")
+                completion(.error(APIError.jsonDecoder))
                 return
             }
             
