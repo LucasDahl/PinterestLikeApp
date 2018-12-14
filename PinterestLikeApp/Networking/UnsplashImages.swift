@@ -6,6 +6,8 @@
 //  Copyright © 2018 Lucas Dahl. All rights reserved.
 //
 
+//NOTE: API with a dictionary need to have a class or struct
+
 import Foundation
 
 // Create a typeAlias
@@ -18,8 +20,13 @@ struct Photo: Codable {
     
 }
 
-enum URLS: String, Codable {
+struct URLS: Codable {
     
-    case raw, full, regular, small, thumb
+    // Properties to call the API
+    let raw:URL
+    let full:URL
+    let regular:URL
+    let small:URL
+    let thumb:URL
     
 }

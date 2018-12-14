@@ -27,9 +27,9 @@ class ViewModel {
     }
     var cellViewModels: [CellViewModel] = []
     
-    //=========
+    //==========
     // Mark: UI
-    //=========
+    //==========
     
     var isLoading = false {
         didSet {
@@ -56,7 +56,7 @@ class ViewModel {
             self.isLoading = true
             
             // GEt the endpoint
-            let endpoint = UnsplashEndpoint.photos(id: UnsplashClient.apiKey, order: .popular)
+            let endpoint = UnsplashEndpoint.photos(id: UnsplashClient.apiKey, order: .latest)
             
             // Setup the client
             client.fetch(with: endpoint) { (either) in
@@ -90,10 +90,10 @@ class ViewModel {
                 group.enter()
                 
                 // Get the imageData
-                guard let imageData = try? Data(contentsOf: URL(string: "")!) else {
+                guard let imageData = try? Data(contentsOf: photo.urls.small) else {
                     
                     // Show the error
-                    self.showError?(APIError.unknown)
+                    self.showError?(APIError.imageDownload)
                     
                     return
                     
@@ -103,7 +103,7 @@ class ViewModel {
                 guard let image = UIImage(data: imageData) else {
                     
                     // Show the error
-                    self.showError?(APIError.unknown)
+                    self.showError?(APIError.imageConvert)
                     
                     return
                     

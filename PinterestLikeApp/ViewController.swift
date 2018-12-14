@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // Properties
-    let images = [#imageLiteral(resourceName: "image-5"), #imageLiteral(resourceName: "image-7"), #imageLiteral(resourceName: "image-1"), #imageLiteral(resourceName: "image-6"), #imageLiteral(resourceName: "image-2"), #imageLiteral(resourceName: "image-4"), #imageLiteral(resourceName: "image-3")]
+    let viewModel = ViewModel(client: UnsplashClient())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,46 @@ class ViewController: UIViewController {
         // Insets
         collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
-    }
+        // Init viewMondel
+        viewModel.showLoading = {
+            
+            if self.viewModel.isLoading {
+                
+                // Start the animation for the activity indicator
+                self.activityIndicator.stopAnimating()
+                
+                // Hide the collectionView
+                self.collectionView.alpha = 0
+                
+            } else {
+                
+                // Stop the animation for the activity indicator
+                self.activityIndicator.stopAnimating()
+                
+                // Unhide the collectionView
+                self.collectionView.alpha = 1
+                
+            }
+            
+        }
+        
+        // ViewModel error
+        viewModel.showError = { error in
+            
+            print(error)
+            
+        }
+        
+        // Reload the collectionView
+        viewModel.reloadData = {
+            self.collectionView.reloadData()
+        }
+        
+        // Fetch the photos
+        viewModel.fetchPhotos()
+        
+        
+    }// End viewDidLoad
 
 
 } // End class
@@ -56,7 +95,7 @@ extension ViewController: PinterestLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForPhotoAtIndexPath indexPath: IndexPath) -> CGFloat {
         
         // Get the image height
-        let image = images[indexPath.item]
+        let image = viewModel.cellViewModels[indexPath.row].image
         let height = image.size.height
         
         // Return height
@@ -77,7 +116,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         // Return the number of cells
-        return images.count
+        return viewModel.cellViewModels.count
         
     }
     
@@ -88,7 +127,7 @@ extension ViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
         
         // Get the image for the cell
-        let image = images[indexPath.row]
+        let image = viewModel.cellViewModels[indexPath.row].image
         
         // Set the cell's image
         cell.imageView.image = image
